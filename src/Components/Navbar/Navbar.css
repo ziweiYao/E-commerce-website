@@ -1,75 +1,100 @@
 .navbar{
-    display: flex;
-    justify-content: space-around;
-    padding: 16px;
-    box-shadow: 0 2px 4px -2px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20%;
+  border-bottom: 2px solid rgba(167, 157, 157, 0.08);
+  flex: 1;
+  flex-wrap: wrap;
+  height:fit-content;
 }
 .nav-logo{
     display: flex;
     align-items: center;
+    flex-direction: column;
     gap: 10px;
 }
-.nav-logo p{
-    color: slategrey;
-    font-size: x-large;
-    font-weight: 1000;
+.nav-logo img{
+  height: 80px;
+  width: auto;
+  flex-shrink: 1;
 }
-
+.nav-logo p{
+    margin-top: -15%;
+    color: slategrey;
+    font-size: 30%;
+    font-weight: 1000;
+    flex: 1;
+    flex-wrap: wrap;
+}
 
 .nav-menu{
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 50px;
-    color: orangered;
-    font-size: 20px;
+    gap: 150px;
+    font-size: 0px;
     font-weight: 1000;
 }
 .nav-menu li{
+    margin-top: -10px;
+    margin-bottom: -10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 5px;
     cursor: pointer;
+    font-size: 20px;
 }
 .nav-menu hr{
+    margin: -5px;
     border: none;
     width: 70%;
-    height: 3px;
+    height: 2px;
     border-radius: 10px;
-    background: aqua;
+    background: rgb(54, 206, 206);
 }
-
 
 .nev-login-cart{
     display: flex;
     align-items: center;
     gap: 50px;
+    margin-top: -10px;
+    flex-shrink: 1;
 }
 .nev-login-cart button{
-    width: 80px;
-    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 70px;
+    height: 30px;
     outline: none;
-    border: 1px solid orangered;
-    border-radius:15%;
-    font-size: small;
-    font-weight: 500;
-    background: white;
+    border: 2px solid orangered;
+    border-radius: 15%;
+    font-size: 15px;
+    font-weight: 700;
+    color: brown;
+    background: rgb(238, 237, 237);
     cursor: pointer;
+    margin-right: -40px;
 }
 .nev-login-cart button:active{
-    background: aliceblue;
+    background: rgb(219, 218, 218);
 }
-
+.nev-login-cart img{
+  margin-top: 20%;
+  height: 30px;
+  width: auto;
+}
 .nev-cart-count{
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -35px;
-    margin-left: -55px;
+    margin-top: -30px;
+    margin-left: -50px;
     border-radius: 10px;
     font-size: 15px;
     font-weight: 500;

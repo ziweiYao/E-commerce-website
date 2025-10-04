@@ -1,28 +1,27 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import { useState } from "react";
 import './Navbar.css'
 import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
-
 export const Navbar = () => {
-    const [menu,setMenu] = useState("shop");
+    const [menu,setMenu] = useState("temp");
   return (
     <div className='navbar'>
             <div className='nav-logo'>
-              <img src = {logo} alt = "logo" style={{height: 'auto', width: 'auto'}}/>
+              <img src = {logo} alt = "logo"/>
               <p>Robotic Tek</p>
             </div>
 
             <ul className='nav-menu'>
-              <li onClick={()=>{setMenu("shop")}}>Shop{menu==="shop"?<hr/>:<></>}</li>
-              <li onClick={()=>{setMenu("product_type1")}}>Robot type1 variants{menu==="product_type1"?<hr/>:<></>}</li>
-              <li onClick={()=>{setMenu("product_type2")}}>Robot type2 variants{menu==="product_type2"?<hr/>:<></>}</li>
-              <li onClick={()=>{setMenu("product_type3")}}>Robot type3 variants{menu==="product_type3"?<hr/>:<></>}</li>
+              <li onClick={()=>{setMenu("shop")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to= '/'>Shop</Link>{menu==='shop'?<hr/>:<></>}</li>
+              <li onClick={()=>{setMenu("product_type1")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type1'>Robot type1s</Link>{menu==="product_type1"?<hr/>:<></>}</li>
+              <li onClick={()=>{setMenu("product_type2")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type2'>Robot type2s</Link>{menu==="product_type2"?<hr/>:<></>}</li>              
             </ul>
 
             <div className='nev-login-cart'>
-              <button>Login</button>
-              <img src={cart_icon} alt='cart'/>
+              <button><Link style={{textDecoration: 'none', color: 'orangered'}} to= '/login'>Login</Link></button>
+              <Link to = '/cart'><img src={cart_icon} alt='cart'/></Link>
               <div className="nev-cart-count">0</div>
             </div>
     </div>

@@ -12,7 +12,7 @@ let all_product = [
   },
   {
     id: 2,
-    name: "The description of the product type2",
+    name: "The description of the product type2 first varient",
     category: "product_type2",
     image: p2_img,
     new_price: 50000.0,
@@ -20,8 +20,8 @@ let all_product = [
   },
   {
     id: 3,
-    name: "The description of the product type3",
-    category: "product_type3",
+    name: "The description of the product type2 second varient",
+    category: "product_type2",
     image: p3_img,
     new_price: 40000.0,
     old_price: 40000.5,
