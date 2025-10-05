@@ -1,34 +1,45 @@
-import p1_img from './product_1.png'
-import p2_img from './product_2.png'
-import p3_img from './product_3.png'
-import p4_img from './product_4.png'
+import p1v1_img from "./product_type1_v1.png";
+import p1v2_img from "./product_type1_v2.png";
+import p1v3_img from "./product_type1_v3.png";
+import p2v1_img from "./product_type2_v1.png";
+import p2v2_img from "./product_type2_v2.png";
 
 let data_product = [
   {
-    id:1,
-    name:"Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
-    image:p1_img,
-    new_price:50.00,
-    old_price:80.50,
+    id: 1,
+    name: "The popular choice _Robot type1_",
+    image: p1v1_img,
+    new_price: 50000.0,
+    old_price: 60000.5,
   },
-  {id:2,
-    name:"Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
-    image:p2_img,
-    new_price:85.00,
-    old_price:120.50,
+  {    
+    id: 2,
+    name: "Robot type1 second varient",
+    image: p1v2_img,
+    new_price: 50000.0,
+    old_price: 50000.5,
   },
-  {id:3,
-    name:"Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
-    image:p3_img,
-    new_price:60.00,
-    old_price:100.50,
+    {    
+    id: 2,
+    name: "Robot type1 second varient",
+    image: p1v3_img,
+    new_price: 50000.0,
+    old_price: 50000.5,
+  },
+  /*
+  {    
+    id: 3,
+    name: "Robot type2 first varient",
+    image: p2v1_img,
+    new_price: 30000.0,
+    old_price: 40000.5,
   },
   {id:4,
-    name:"Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
-    image:p4_img,
-    new_price:100.00,
-    old_price:150.00,
+    name: "Robot type2 second varient",
+    image:p2v2_img,
+    new_price:40000.00,
   },
+  */
 ];
 
 export default data_product;

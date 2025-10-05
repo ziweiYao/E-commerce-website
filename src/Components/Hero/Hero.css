@@ -1,6 +1,6 @@
 .hero{
     min-height: 100vh;
-    background:  linear-gradient(180deg, orange, white 60%);
+    background:  linear-gradient(180deg, orange, white 90%);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -49,4 +49,9 @@
     flex:1;
     justify-content: center;
     align-items: center;
+}
+.hero-right img{
+    margin-left: auto;
+    width: 700px;
+    height: auto;
 }
