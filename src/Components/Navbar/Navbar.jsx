@@ -5,7 +5,7 @@ import './Navbar.css'
 import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
 export const Navbar = () => {
-    const [menu,setMenu] = useState("temp");
+    const [menu,setMenu_Bar] = useState("temp");
   return (
     <div className='navbar'>
             <div className='nav-logo'>
@@ -14,9 +14,9 @@ export const Navbar = () => {
             </div>
 
             <ul className='nav-menu'>
-              <li onClick={()=>{setMenu("shop")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to= '/'>Shop</Link>{menu==='shop'?<hr/>:<></>}</li>
-              <li onClick={()=>{setMenu("product_type1")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type1'>Robot type1s</Link>{menu==="product_type1"?<hr/>:<></>}</li>
-              <li onClick={()=>{setMenu("product_type2")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type2'>Robot type2s</Link>{menu==="product_type2"?<hr/>:<></>}</li>              
+              <li onClick={()=>{setMenu_Bar("shop")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to= '/'>Shop</Link>{menu==='shop'?<hr/>:<></>}</li>
+              <li onClick={()=>{setMenu_Bar("product_type1")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type1'>Robot type1s</Link>{menu==="product_type1"?<hr/>:<></>}</li>
+              <li onClick={()=>{setMenu_Bar("product_type2")}}><Link style={{textDecoration: 'none', color: 'orangered'}} to='/product_type2'>Robot type2s</Link>{menu==="product_type2"?<hr/>:<></>}</li>              
             </ul>
 
             <div className='nev-login-cart'>

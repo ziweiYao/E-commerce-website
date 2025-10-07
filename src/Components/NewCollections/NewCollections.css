@@ -1,0 +1,30 @@
+.new-collections{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.new-collections h1{
+    font-size: 50px;
+    font-weight: 700;
+}
+.new-collections hr{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 70%;
+    height: 4px;
+    border-radius: 100px;
+    background: black;
+    margin: auto;
+}
+.collections{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 60px auto;
+    gap: 30px;
+    max-width: 1280px;
+}

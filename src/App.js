@@ -8,12 +8,14 @@ import Cart from './Pages/Cart';
 import LoginSignup from './Pages/LoginSignup';
 import product_type1_banner from './Components/Assets/product_type1_banner.png'
 import product_type2_banner from './Components/Assets/product_type2_banner.png'
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Navbar/>
+      
       <Routes>
         <Route path='/' element={<Shop/>}/>
         <Route path='/product_type1' element={<ShopCategory banner={product_type1_banner} category="product_type1"/>}/>
@@ -25,6 +27,8 @@ function App() {
         <Route path='/login' element={<LoginSignup/>}/>
       </Routes>
       </BrowserRouter>
+
+      <Footer/>
     </div>
   );
 }

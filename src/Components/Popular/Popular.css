@@ -4,6 +4,7 @@
     align-items: center;
     gap: 10px;
     min-height: 300px;
+    min-width: 1500px;
     border-bottom: 4px solid black;
     padding: 20px;
 }

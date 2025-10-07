@@ -1,4 +1,8 @@
 .item{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 21%;
     height: auto;
 
