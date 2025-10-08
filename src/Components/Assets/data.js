@@ -17,28 +17,28 @@ let data_product = [
     name: "Robot type1 second varient",
     image: p1v2_img,
     new_price: 50000.0,
-    old_price: 50000.5,
+    old_price: 60000.5,
   },
     {    
-    id: 2,
-    name: "Robot type1 second varient",
+    id: 3,
+    name: "Robot type1 third varient",
     image: p1v3_img,
-    new_price: 50000.0,
-    old_price: 50000.5,
+    new_price: 60000.0,
+    old_price: 70000.5,
   },
   /*
   {    
-    id: 3,
+    id: 4,
     name: "Robot type2 first varient",
     image: p2v1_img,
     new_price: 30000.0,
     old_price: 40000.5,
   },
-  {id:4,
+  {id:5,
     name: "Robot type2 second varient",
     image:p2v2_img,
     new_price:40000.00,
-  },
+  }
   */
 ];
 

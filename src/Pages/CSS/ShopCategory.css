@@ -3,12 +3,14 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 10px; 
 }
 .shopcategory-indexSort{
     display: flex;
     margin: 0px 170px;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }.shopcategory-sort{
     padding: 10px 20px;
     border-radius: 40px;
