@@ -12,6 +12,7 @@ const ProductDisplay = (props) => {
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
             <img src={product.image} alt="" />
+            
             <img src={product.image} alt="" />
             <img src={product.image} alt="" />
             <img src={product.image} alt="" />
@@ -31,7 +32,7 @@ const ProductDisplay = (props) => {
             <p>(122)</p>
         </div>
         <div className="productdisplay-right-prices">
-            <div className="productdisplay-right-price-old">${product.old_price}</div>
+            <div className="productdisplay-right-price-old">{product.old_price&&<>$</>}{product.old_price}</div>
             <div className="productdisplay-right-price-new">${product.new_price}</div>
         </div>
         <div className="productdisplay-right-description">
@@ -46,7 +47,7 @@ const ProductDisplay = (props) => {
             </div>
         </div>
         <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
-        <p className='productdisplay-right-category'><span>Category :</span>Women , T-Shirt, Crop Top</p>
+        <p className='productdisplay-right-category'><span>Category :</span>Type1</p>
         <p className='productdisplay-right-category'><span>Tags :</span>Modern, Latest</p>
       </div>
     </div>
