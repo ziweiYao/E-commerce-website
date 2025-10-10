@@ -18,7 +18,38 @@ const getDefaultCart = () => {
     }
     return cart
 }
+//这就是最开始cart，所有的物品其实都在里面，但是他们的数量都为0，其实更好的方式是让他为空对象，然后用？？来识别undefined，
+// 这样就可以做到在完全空的cart里一个一个字典的加，缺点是如果id起乱套了，那这个cart的修改也乱套了，好处是如果你有超过一万的商品的话
+//不用自动生成一个一万长度的字典，而是一个一个加
+//const [cartItems,setCartItems] = useState(getDefaultCart());
+//const addToCart = (itemId) =>{
+//    setCartItems( (prev) => (
+//    {  ...prev, [itemId]: (prev[itemId] ?? 0) + 1}
+//    )); 
+//}
 
+
+//const [cartItems,setCartItems] = useState(getDefaultCart());
+//const addToCart = (itemId) =>{
+//    setCartItems( (prev) => (
+//    {  ...prev, [itemId]: (prev[itemId] - 1 ?? 0)}
+//    )); 
+
+//就像这样，利用空值合并运算符 ??，“如果左边是 null/undefined，就用右边的替代值”。将之前没有创建的key生成并赋值1，然后给它加1   1
+//const removeFromCart = (itemId) => {
+//  setCartItems(prev => {
+//    const nextQty = (prev[itemId] ?? 0) - 1;
+//    if (nextQty > 0) {
+//      return { ...prev, [itemId]: nextQty };
+//    } else {
+//      const { [itemId]: originalQty, ...rest } = prev; // 删除该键
+//      return rest;
+//    }
+//  });
+//};
+//同理我们也可以搓出更好的removeFromCart，如果nextQty 小于等于0，那么我们就删除此键， 
+//const { [itemId]: originalQty, ...rest } = prev; 可以改为
+//const { [itemId]: _, ...rest } = prev;  因为orginalQty只是我为了方便记录javaScript的pattern matching功能的演示。
 
 const ShopContextProvider = (props) => {
     
@@ -28,21 +59,22 @@ const ShopContextProvider = (props) => {
             return {...prev, [itemId]:prev[itemId]+1 }
         })
     }
+
+    const removeFromCart = (itemId) =>{
+        setCartItems( (prev) => ( 
+            {...prev, [itemId]:prev[itemId]-1}
+        ))
+    }
     /*
     在这里，...prev是作为旧对象的展开拷贝，注意他们都在一个{}里，也就是说，我把旧的数据都先拷贝到新创建的一个对象也就是这个{}，
     并且在后面加了 key 为[itemId], 内容为prev[itemId]（对象名[key]格式，等于 对象名.key，
     但是这里是更新,itemId作为key不固定，必须用 对象名[key]的格式。） 如果 prev[itemId]已经存在,就会被覆盖，如果不在就会新加，
     但是我们的代码的value prev[itemId]被-1了，所以我们可能会有报错风险，不过不要紧 因为在getDefaultCart我们已经把每个item
     都给生成在cart里了并且赋值为0了 所以 prev[itemId] 100%有值，除非输入的itemId本来就是虚构的，不来自于alldata
-    */
-    const reomveFromCart = (itemId) =>{
-        setCartItems( (prev) => ( 
-            {...prev, [itemId]:prev[itemId]-1}
-        ))
-    }
-    
+    */    
 
-    const contextValue= { all_product , cartItems, addToCart, reomveFromCart };
+    const contextValue= { all_product, cartItems, addToCart, removeFromCart};
+    console.log(cartItems)
 
     return (
         <ShopContext.Provider value={contextValue}>
