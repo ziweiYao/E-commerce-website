@@ -72,11 +72,30 @@ const ShopContextProvider = (props) => {
     但是我们的代码的value prev[itemId]被-1了，所以我们可能会有报错风险，不过不要紧 因为在getDefaultCart我们已经把每个item
     都给生成在cart里了并且赋值为0了 所以 prev[itemId] 100%有值，除非输入的itemId本来就是虚构的，不来自于alldata
     */    
+    const getToltalCartAmount = () =>{
+        let totalAmount = 0;
+        for(const item in cartItems){
+            if(cartItems[item]>0){
+                let currentItem = all_product.find((product)=> product.id === Number(item));
+                totalAmount += currentItem.new_price * cartItems[item];
+            }
+        }
+        return totalAmount
+    }
 
-    const contextValue= { all_product, cartItems, addToCart, removeFromCart};
-    console.log(cartItems)
+    const getTotalCartItems = React.useMemo(() => {
+        let count = 0;
+        for(let item in cartItems){
+        if(cartItems[item] > 0 ){
+            count += cartItems[item]
+        }}
+        return count;
+    },[cartItems]);
 
-    return (
+
+    const contextValue= { all_product, cartItems, addToCart, removeFromCart, getToltalCartAmount,getTotalCartItems};
+
+        return (
         <ShopContext.Provider value={contextValue}>
             {props.children}
         </ShopContext.Provider>

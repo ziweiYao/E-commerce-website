@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom';
 import './ProductDisplay.css'
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
+import cart_icon from '../Assets/cart_icon.png'
 import { ShopContext } from '../../Context/ShopContext';
 
 const ProductDisplay = (props) => {
     const {product} = props;
-    const {addToCart} = useContext(ShopContext);
+    const {addToCart, getTotalCartItems} = useContext(ShopContext);
   return (
     <div className='productdisplay'>
       <div className="productdisplay-left">
@@ -46,7 +48,11 @@ const ProductDisplay = (props) => {
                 <div>UPGradePack</div>
             </div>
         </div>
-        <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
+        <div className='cart'>
+          <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
+          <Link to = '/cart'> <img src={cart_icon} alt=''/> </Link>  
+          <div className='cart-count'>{getTotalCartItems}</div>
+        </div>
         <p className='productdisplay-right-category'><span>Category :</span>Type1</p>
         <p className='productdisplay-right-category'><span>Tags :</span>Modern, Latest</p>
       </div>
