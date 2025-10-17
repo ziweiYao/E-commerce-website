@@ -81,9 +81,19 @@ const Product = mongoose.model("Product",{
 
 })
 //然后马上写，添加product的功能，用刚刚的product类
-add.post('/addproduct',async(req,res) => {
-    const product = new Product({
-        id: req.body.id,
+app.post('/addproduct',async(req,res) => {
+        let products = await Product.find({});
+        let id;
+        if(products.length > 0){
+            let last_product = products[products.length - 1];
+            id = last_product.id + 1;
+        }
+        else{
+            id = 1; // If no products exist, start IDs at 1
+        }
+        console.log('req.body:', req.body);
+        const product = new Product({
+        id: id,
         name: req.body.name,
         image: req.body.image,
         category: req.body.category,
@@ -95,10 +105,21 @@ add.post('/addproduct',async(req,res) => {
     console.log("saved")
     res.json({
         success: true,
-        name: req.product.name
+        name: product.name
     })
 })
+app.post('/removeproduct',async(req,res) => {
+    await Product.findOneAndDelete({id: req.body.id});
+    console.log("deleted product with id:", req.body.id);
+    res.json({success: true, name: req.body.name})
+})
 
+//creating api to get all products
+app.get('/allproducts',async(req,res)=>{
+    let products = await Product.find({});
+    console.log("fetched all products");
+    res.send({products});
+})
 
 app.listen(port,(error)=>{
     if(!error){
