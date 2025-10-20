@@ -10,7 +10,7 @@ const getDefaultCart = () => {
     let cart = {};
     for (let index = 0; index < all_product.length+1; index++){
         cart[index] = 0;
-        //要注意一点，cart[index]并不是array的index，而是用index这个数字作为键key，创建了一个字典属性
+        //要注意一点，cart[index]并不是array的index，而是用index这个数字作为键key，创建了一个对象cart的一个新属性 名字是index，值为0
         //也就是运行到 index = 1 的时候， 那么之前cart {0：0}里就变成 {0：0, 1 ：0}这个样子了 而不是 cart的第一个index 赋值为0
         //注意 假如 index = 1，cart[1]是对象 cart.1的同义，但是index是一个持续变化的value, 不能直接说“cart.index”
         //不然cart里其实没有 index，只有 0，1，2，3，4 这些id 就像 person.name一样 cart.index会去尝试寻找index这个键
@@ -19,8 +19,8 @@ const getDefaultCart = () => {
     return cart
 }
 //这就是最开始cart，所有的物品其实都在里面，但是他们的数量都为0，其实更好的方式是让他为空对象，然后用？？来识别undefined，
-// 这样就可以做到在完全空的cart里一个一个字典的加，缺点是如果id起乱套了，那这个cart的修改也乱套了，好处是如果你有超过一万的商品的话
-//不用自动生成一个一万长度的字典，而是一个一个加
+// 这样就可以做到在完全空的cart里一个一个对象的加，缺点是如果id起乱套了，那这个cart的修改也乱套了，好处是如果你有超过一万的商品的话
+//不用自动生成一个一万长度的对象，而是一个一个加
 //const [cartItems,setCartItems] = useState(getDefaultCart());
 //const addToCart = (itemId) =>{
 //    setCartItems( (prev) => (

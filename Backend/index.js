@@ -93,13 +93,14 @@ app.post('/addproduct',async(req,res) => {
         }
         console.log('req.body:', req.body);
         const product = new Product({
-        id: id,
-        name: req.body.name,
-        image: req.body.image,
-        category: req.body.category,
-        new_price: req.body.new_price,
-        old_price: req.body.old_price,
-    }) 
+            id: id,
+            name: req.body.name,//注意这里的req.body.name是前端传过来的数据
+            image: req.body.image,
+            category: req.body.category,
+            new_price: req.body.new_price,
+            old_price: req.body.old_price,   }
+        ) 
+
     console.log(product);
     await product.save();
     console.log("saved")

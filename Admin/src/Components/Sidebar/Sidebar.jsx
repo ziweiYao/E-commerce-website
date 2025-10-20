@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import add_product_icon from '../../Assets/Product_Cart.svg'
 import list_product_icon from '../../Assets/Product_list_icon.svg'
 
+//link 组件用来做单页面应用的导航，避免页面刷新
 const Sidebar = () => {
   return (
     <div className='sidebar'> 

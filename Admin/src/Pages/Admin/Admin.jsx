@@ -5,7 +5,7 @@ import {Routes, Route} from 'react-router-dom'
 import Addproduct from '../../Components/AddProduct/Addproduct'
 import ListProduct from '../../Components/ListProduct/ListProduct'
 
-
+//routes 用来定义路由容器，route用来定义具体的路由规则
 const Admin = () => {
   return (
     <div className='admin'>
