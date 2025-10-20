@@ -9,8 +9,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-const { type } = require("os");
-const { data } = require("react-router-dom");
+
 
 app.use(express.json());
 app.use(cors());
@@ -37,10 +36,10 @@ const upload = multer({storage:storage})
 app.use('/images',express.static('upload/images'))
 //curl.exe -i -X POST -F "product=@`"C:\Users\33031\Desktop\download.jpg`"" http://localhost:4000/upload  
 //作为测试用的上传指令
-app.post("/upload",upload.single('product'),(req,res)=>{
+app.post("/upload",upload.single('product'),async (req,res)=>{//.single('product')表示上传单个文件，字段名为'product'
     res.json({
         success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
+        image_url: `http://localhost:${port}/images/${req.file.filename}`//返回图片的访问地址
     })
 })
 
@@ -48,27 +47,28 @@ app.post("/upload",upload.single('product'),(req,res)=>{
 const Product = mongoose.model("Product",{
     id: {
         type: Number,
-        require:true
+        required:true
     },
     name: {
         type: String,
-        require: true
+        required: true,
+        unique: true
     },
     image: {
         type: String,
-        require: true
+        required: true
     },
     category:{
         type: String,
-        require: true
+        required: true
     },
     new_price:{
         type: Number,
-        require: true
+        required: false
     },
     old_price:{
         type: Number,
-        require: false
+        required: true
     },
     date:{
         type:Date,
@@ -102,12 +102,27 @@ app.post('/addproduct',async(req,res) => {
         ) 
 
     console.log(product);
-    await product.save();
-    console.log("saved")
-    res.json({
-        success: true,
-        name: product.name
-    })
+    
+    try {
+        await product.save();
+            console.log("saved");
+            return res.json({ success: true, name: product.name });
+        } catch (err) {
+        console.error('Add product error:', err);
+        // Mongo duplicate key error
+        if (err && err.code === 11000) {//这是MongoDB的重复键错误代码，我们规定了name唯一，所以会报这个错
+            return res.status(409).json({
+            success: false,
+            message: 'Product already exists',
+            duplicate: err.keyValue || null //返回重复的键值对，方便前端显示
+            });
+        }
+        // 其它错误
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        });
+        }
 })
 app.post('/removeproduct',async(req,res) => {
     await Product.findOneAndDelete({id: req.body.id});

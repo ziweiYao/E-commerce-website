@@ -17,13 +17,27 @@ const ListProduct = () => {
     }
 
     useEffect(() => {
-      fetchInfo(); //组件加载时获取产品数据
+      fetchInfo(); //组件加载时获取产品数据，换句话说就是刷新数据，显示最新的产品列表
     } , []); //空依赖数组表示只在组件挂载时执行一次
 
+    const removeProduct = async (id) => {
+      await fetch(`http://localhost:4000/removeproduct`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log('Remove product response:', data);
+        fetchInfo(); //刷新产品列表
+      });
+    }
   return (
-    <div className='list-product'>
+    <div className='listproduct'>
         <h1>All Product List</h1>
-        <div className='lsitproduct-format-main'>
+        <div className='listproduct-format-main'>
           <p>Products</p>
           <p>Title</p>
           <p>Old price</p>
@@ -39,8 +53,7 @@ const ListProduct = () => {
                   <p>${product.old_price}</p>
                   <p>${product.new_price}</p>
                   <p>{product.category}</p>
-                  <img className='listproduct-remove-icon' src = {cross_icon} alt = ''/>
-                  <button className='listproduct-remove-btn'>Remove</button>
+                  <img onClick={()=>{removeProduct(product.id)}} src={cross_icon} alt="" className='listproduct-cross-icon' />
                   <hr/>
                 </div>)
             })}

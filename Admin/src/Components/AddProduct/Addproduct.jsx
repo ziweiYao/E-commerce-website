@@ -39,37 +39,66 @@ const Addproduct = () => {
     }; 
 
     const Add_product = async () => {
-        console.log(produtDetails);//测试用，看看produtDetails对象是否正确
-        let responseData; //用来存放从后端返回的数据
-        let product = produtDetails; //这是引用赋值，所以后面改product的image属性，produtDetails也会变
-        let formData = new FormData();//创建一个formdata对象，用来存放要上传的数据
-        formData.append('product',image);//把图片数据放进去，key是product，和后端upload.single('product')对应
-        await fetch('http://localhost:4000/upload',{ //发起上传请求
-            method:'POST',     //用post方法
-            headers:{ //注意这里不能设置Content-Type，浏览器会自动设置为 multipart/form-data，并添加正确的 boundary
-                Accept:'application/json', //告诉后端我们希望接受json格式的响应
-            },
-            body:formData, //把formdata对象放到请求体中
-        }).then(res => res.json()).then( data => { //把响应解析为json
-            responseData = data; //把解析后的数据放到responseData变量中
-        }) //注意这里用了await，所以会等上传和解析完成后才继续往下执行
-        console.log('Upload response:', responseData); //调试用，看看后端返回了什么
-        if(responseData.success){ //如果上传成功
-            product.image = responseData.image_url; //把返回的图片url放到product对象的image属性中
-            console.log('Final product data to add:', product); //调试用，看看最终要添加的product对象
-        }
-        await fetch('http://localhost:4000/addproduct',{ //发起添加产品请求
-            method:'POST',
-            headers:{
-                Accept:'application/json',//告诉后端我们希望接受json格式的响应
-                'Content-Type':'application/json' //告诉后端我们发送的是json格式的数据
-            },
-            body:JSON.stringify(product) //把product对象转换为json字符串放到请求体中
-        }).then(res => res.json()).then(data => {//把响应解析为json
-            data.success?alert('Product added successfully!'):alert('Failed to add product.');
-            console.log('Add product response:',data); //调试用，看看后端返回了什么
-        });
+        try {
+            if (!image) {//没有选择图片
+                alert('Please select an image file.');
+                return;
+            }
+            if (!produtDetails.name || !produtDetails.old_price) {//没有填写名称或价格
+                alert('Please fill in all required fields.');
+                return;
+            }
+            if (!produtDetails.category) {//没有选择类别
+                alert('please select a product category.');
+                return;
+            }
+            console.log(produtDetails);//打印当前的产品信息，方便调试
+            const product = { ...produtDetails };// 拷贝 state，避免直接修改引用
+            const formData = new FormData();// 上传图片 formData 对象用于构建一组表示表单字段及其值的键值对，通常用于发送包含文件的表单数据
+            formData.append('product', image);//注意这里的'product'要和后端upload.single('product')中的'product'一致
+            const uploadRes = await fetch('http://localhost:4000/upload', {// 上传图片
+                method: 'POST',
+                body: formData,
+            });
+            if (!uploadRes.ok) { // 上传失败
+                const errBody = await uploadRes.json().catch(() => null); // 尝试解析错误响应体
+                throw new Error(errBody?.message || `Image upload failed (${uploadRes.status})`);//抛出错误
+            }
+            const uploadData = await uploadRes.json().catch(() => null);// 解析响应体
+            if (!uploadData || !uploadData.image_url) {// 上传响应无效
+                throw new Error('Invalid upload response');//抛出错误
+            }
+            product.image = uploadData.image_url; //将fetch到的图片地址赋值给product对象的image字段
+            // 提交商品
+            const addRes = await fetch('http://localhost:4000/addproduct', {
+            //将product对象发送到后端，把刚刚上传的图片地址也包含进去，回复的信息储存在addRes中
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: JSON.stringify(product),
+            });
+            if (!addRes.ok) {// 添加商品失败
+                const errBody = await addRes.json().catch(() => null);//把addRes中的信息解析成json格式储存在errBody中，catch部分是防止解析失败报错
+                if (addRes.status === 409) {
+                    alert(errBody.message);//后端返回的错误信息，我们已经写了处理重复商品的message
+                    return;
+                }
+                throw new Error(errBody?.message || `Add product failed (${addRes.status})`);
+            }
 
+            const addData = await addRes.json().catch(() => null);
+            if (addData && addData.success) {
+                alert('Product added successfully!');
+            } else {
+                alert(addData?.message || 'Failed to add product.');
+            }
+            console.log('Add product response:', addData);
+        } catch (err) {
+            console.error('Error adding product:', err);
+            alert(err.message || 'Network or server error. Please try again.');
+        }
     }
 
   return (
@@ -89,9 +118,10 @@ const Addproduct = () => {
             </div>
             <div className="addproduct-itemfield">
                 <p>Product Category</p>
-                <select value={produtDetails.category} onChange={changeHandler} name="category" className='add-product-selector'>
-                    <option value="product_type1"> product type1 </option>
-                    <option value="product_type2"> product type2 </option>
+                <select name="category" value={produtDetails.category} onChange={changeHandler} className='add-product-selector'>
+                    <option value="">please select robot type</option>
+                    <option value="product_type1">product type1</option>
+                    <option value="product_type2">product type2</option>
                 </select>
             </div>
             <div className='addproduct-itemfield'>
