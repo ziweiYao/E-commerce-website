@@ -11,12 +11,12 @@ const ListProduct = () => {
       await fetch('http://localhost:4000/allproducts')
         .then(res => res.json())
         .then(data => {
-          setAllProducts(data.products|| []); // 取出 products 数组
-          console.log('All products data:', data);
+          setAllProducts(data.products|| []); // 取出 products 数组 并更新状态，如果 data.products 不存在则使用空数组
+          console.log('All products data:', data);//打印获取到的所有产品数据
         });
     }
 
-    useEffect(() => {
+    useEffect(() => { //只在最开始使用ListProduct组件时执行一次
       fetchInfo(); //组件加载时获取产品数据，换句话说就是刷新数据，显示最新的产品列表
     } , []); //空依赖数组表示只在组件挂载时执行一次
 

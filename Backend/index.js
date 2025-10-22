@@ -137,6 +137,72 @@ app.get('/allproducts',async(req,res)=>{
     res.send({products});
 })
 
+const Users = mongoose.model("Users",{
+    username: {    
+        type: String,
+        required: true,  
+    },
+    email: {    
+        type: String,
+        required: true,
+        unique: true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    cartData:{
+        type: Object,
+        required: false
+    },  
+    date:{
+        type:Date,
+        default:Date.now
+    }
+}) 
+app.post('/signup',async(req,res) => {
+    let check = await Users.findOne({email: req.body.email});
+    if(check){
+        return  res.status(400).json({
+            success: false,
+            message: 'Email already registered'
+        });
+    }
+    let cart = {};
+    for (let i = 0; i < 100; i++){
+        cart[i] = 0;
+    }
+    const user = new Users({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        cartData: cart
+    }) 
+    await user.save();
+    const data = {
+        id: user.id,
+    }
+    const token = jwt.sign(data, 'secret_ecom');
+    res.json({success: true, token: token});
+})
+
+app.post('/login',async(req,res) => {
+    let user = await Users.findOne({email: req.body.email});
+    if(!user || user.password !== req.body.password){
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid email or password'
+        });
+    }
+    const data = {
+        id: user.id,
+    }
+    const token = jwt.sign(data, 'secret_ecom');
+    res.json({success: true, token: token});
+})
+
+
+
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server running on port");

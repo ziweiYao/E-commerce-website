@@ -24,7 +24,9 @@ export const Navbar = () => {
             </ul>
 
             <div className='nev-login-cart'>
-              <Link style={{textDecoration: 'none', color: 'orangered'}} to= '/login'><button>Login</button></Link>
+              {localStorage.getItem('auth-token')
+              ? <button onClick={() => {localStorage.removeItem('auth-token'); window.location.replace('/')}}>Logout</button>
+              : <Link style={{textDecoration: 'none', color: 'orangered'}} to= '/login'><button>Login</button></Link>}
               <Link to = '/cart'><img src={cart_icon} alt='cart'/></Link>
               <div className='nev-login-cart-count'>{getTotalCartItems}</div>
             </div>

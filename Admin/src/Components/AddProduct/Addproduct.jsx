@@ -16,7 +16,11 @@ const Addproduct = () => {
             ...produtDetails,
             [e.target.name]:e.target.value
         })
-    }
+    }//在例子<input value={produtDetails.new_price} onChange={changeHandler} type="number" name='new_price' placeholder='Enter Discounted Price' />
+    //中，当输入框内容变化时，会调用changeHandler函数，传入事件对象e。函数内部通过e.target.name获取输入框的name属性（这里是'new_price'），
+    //通过e.target.value获取当前输入框的值，然后使用setProductDetails更新状态对象produtDetails，保持其他字段不变，仅更新new_price字段的值。
+    //也就是说 name 的值必须和 produtDetails 对象中的字段名一致，这样才能正确更新对应的字段。
+    //而input中的value={produtDetails.new_price}确保输入框显示的是produtDetails对象中new_price字段的当前值，实现了双向绑定。
 
     const imageHandler = (e) => { //e 为 event 对象，事件对象，作为例子之一： 在后面的 value = produtDetails.old_price onChange={changeHandler} 中，changeHandler 函数的参数 e 就是事件对象
         const file = e.target.files && e.target.files[0];// targets的意思是文件列表，取第一个DOM，意思是Document Object Model，即文档对象模型https://www.runoob.com/jsref/dom-obj-all.html
@@ -88,11 +92,11 @@ const Addproduct = () => {
                 throw new Error(errBody?.message || `Add product failed (${addRes.status})`);
             }
 
-            const addData = await addRes.json().catch(() => null);
-            if (addData && addData.success) {
+            const addData = await addRes.json().catch(() => null); // 解析响应体
+            if (addData && addData.success) { // 添加商品成功
                 alert('Product added successfully!');
-            } else {
-                alert(addData?.message || 'Failed to add product.');
+            } else { // 添加商品失败
+                alert(addData?.message || 'Failed to add product.'); //addData后面的？代表如果addData.message不存在就使用‘Failed to add product.’
             }
             console.log('Add product response:', addData);
         } catch (err) {
@@ -104,20 +108,20 @@ const Addproduct = () => {
   return (
     <div className='add-product'>
         <div className='addproduct-itemfield'>
-            <p>Product Name</p>
+            <p>Product Name*</p>
             <input value = {produtDetails.name} onChange = {changeHandler} type="text" name='name' placeholder='Enter Robot Name' />
         </div>
         <div className='addproduct-price'>
             <div className='addproduct-itemfield'>
-                <p>Price</p>    
+                <p>Price*</p>    
                 <input value = {produtDetails.old_price} onChange = {changeHandler} stype="number" name='old_price' placeholder='Enter Robot Price' />
             </div>
             <div className='addproduct-itemfield'>
-                <p>Discounted Price</p>    
+                <p>Discounted Price*</p>    
                 <input value={produtDetails.new_price} onChange={changeHandler} type="number" name='new_price' placeholder='Enter Discounted Price' />
             </div>
             <div className="addproduct-itemfield">
-                <p>Product Category</p>
+                <p>Product Category*</p>
                 <select name="category" value={produtDetails.category} onChange={changeHandler} className='add-product-selector'>
                     <option value="">please select robot type</option>
                     <option value="product_type1">product type1</option>
